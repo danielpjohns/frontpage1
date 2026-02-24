@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Mail</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:wght@400;600&family=Oswald:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --red: #c8102e;
+    --dark: #111;
+    --mid: #444;
+    --light: #f5f0eb;
+    --border: #c8102e;
+  }
+
+  body {
+    background: #f5f0eb;
+    font-family: 'Source Serif 4', serif;
+    color: var(--dark);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+  }
+
+  /* TOP BAR */
+  .topbar {
+    background: var(--red);
+    color: white;
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 14px;
+    margin: 0 -16px;
+  }
+
+  /* HEADER */
+  header {
+    border-bottom: 4px solid var(--red);
+    padding: 16px 0 10px;
+    text-align: center;
+    position: relative;
+  }
+
+  .edition-info {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--mid);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .masthead {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(56px, 9vw, 110px);
+    font-weight: 900;
+    line-height: 0.9;
+    letter-spacing: -3px;
+    color: var(--dark);
+    text-transform: uppercase;
+  }
+
+  .masthead span { color: var(--red); }
+
+  .tagline {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-top: 8px;
+    border-top: 1px solid #ccc;
+    padding-top: 8px;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    gap: 0;
+    background: var(--dark);
+    margin: 0 -16px 18px;
+    overflow-x: auto;
+  }
+
+  nav a {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: white;
+    text-decoration: none;
+    padding: 8px 16px;
+    white-space: nowrap;
+    border-right: 1px solid #333;
+    transition: background 0.15s;
+  }
+
+  nav a:hover, nav a.active { background: var(--red); }
+
+  /* BREAKING */
+  .breaking {
+    background: var(--red);
+    color: white;
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 8px 14px;
+    margin-bottom: 18px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+  }
+
+  .breaking-label {
+    background: white;
+    color: var(--red);
+    font-weight: 700;
+    font-size: 10px;
+    padding: 2px 7px;
+    letter-spacing: 2px;
+    white-space: nowrap;
+  }
+
+  /* MAIN GRID */
+  .main-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  /* HERO */
+  .hero {
+    border-bottom: 3px solid var(--red);
+    padding-bottom: 16px;
+  }
+
+  .hero-img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    display: block;
+    background: linear-gradient(135deg, #2c2c2c 0%, #555 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-img-placeholder {
+    width: 100%;
+    height: 320px;
+    background: linear-gradient(160deg, #1a1a2e 0%, #374151 60%, #1f2937 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 13px;
+    font-family: 'Oswald', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-img-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.01) 20px, rgba(255,255,255,0.01) 40px);
+  }
+
+  .photo-caption-bar {
+    background: var(--dark);
+    color: white;
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 10px;
+  }
+
+  .hero-kicker {
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-top: 12px;
+    margin-bottom: 4px;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 4vw, 42px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+
+  .hero .standfirst {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--mid);
+    border-left: 3px solid var(--red);
+    padding-left: 12px;
+    margin-bottom: 10px;
+  }
+
+  .byline {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  .byline strong { color: var(--red); }
+
+  /* SIDEBAR */
+  .sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .sidebar-story {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 14px;
+  }
+
+  .sidebar-story:last-child { border-bottom: none; }
+
+  .sidebar-img-placeholder {
+    width: 100%;
+    height: 140px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #aaa;
+    overflow: hidden;
+  }
+
+  .sidebar-img-placeholder.img1 { background: linear-gradient(135deg, #2d4a22, #4a7a3a); }
+  .sidebar-img-placeholder.img2 { background: linear-gradient(135deg, #1a2a4a, #2a4a8a); }
+  .sidebar-img-placeholder.img3 { background: linear-gradient(135deg, #4a2a1a, #8a4a2a); }
+
+  .sidebar-story .kicker {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 3px;
+  }
+
+  .sidebar-story h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+
+  .sidebar-story p {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--mid);
+  }
+
+  /* LOWER GRID */
+  .lower-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    border-top: 4px double #ccc;
+    padding-top: 20px;
+    margin-bottom: 24px;
+  }
+
+  .story-card {
+    border-right: 1px solid #ddd;
+    padding-right: 18px;
+  }
+
+  .story-card:last-child { border-right: none; padding-right: 0; }
+
+  .story-card .kicker {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 4px;
+  }
+
+  .story-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(16px, 2vw, 22px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .story-card .thumb {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #aaa;
+    overflow: hidden;
+  }
+
+  .story-card .thumb.t1 { background: linear-gradient(135deg, #2a1a3a, #5a3a7a); }
+  .story-card .thumb.t2 { background: linear-gradient(135deg, #1a3a2a, #3a7a5a); }
+  .story-card .thumb.t3 { background: linear-gradient(135deg, #3a2a1a, #7a5a3a); }
+
+  .story-card p {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--mid);
+  }
+
+  /* OPINION STRIP */
+  .opinion-strip {
+    background: var(--dark);
+    color: white;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .opinion-strip .label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    white-space: nowrap;
+    border-right: 2px solid var(--red);
+    padding-right: 12px;
+    margin-right: 6px;
+  }
+
+  .opinion-items {
+    display: flex;
+    gap: 28px;
+    flex: 1;
+  }
+
+  .opinion-item {
+    flex: 1;
+    border-right: 1px solid #333;
+    padding-right: 24px;
+  }
+
+  .opinion-item:last-child { border-right: none; }
+
+  .opinion-item .columnist {
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 4px;
+  }
+
+  .opinion-item h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    line-height: 1.3;
+    font-style: italic;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 3px solid var(--dark);
+    padding: 16px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  footer .price-box {
+    background: var(--red);
+    color: white;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  /* MOST READ */
+  .most-read {
+    background: white;
+    border: 2px solid var(--dark);
+    padding: 14px;
+    margin-bottom: 24px;
+  }
+
+  .most-read-header {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    border-bottom: 2px solid var(--red);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .most-read-header::before {
+    content: '▶';
+    color: var(--red);
+    font-size: 10px;
+  }
+
+  .most-read-list {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+  }
+
+  .most-read-item {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .rank {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--red);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .most-read-item p {
+    font-family: 'Source Serif 4', serif;
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--dark);
+    font-weight: 600;
+  }
+
+  /* DECORATIVE RULE */
+  .rule { 
+    border: none; 
+    border-top: 1px solid #bbb; 
+    margin: 20px 0;
+  }
+
+  .rule.thick { border-top: 4px solid var(--dark); }
+  .rule.red { border-top: 3px solid var(--red); }
+
+  @media (max-width: 700px) {
+    .main-grid { grid-template-columns: 1fr; }
+    .lower-grid { grid-template-columns: 1fr; }
+    .most-read-list { grid-template-columns: 1fr 1fr; }
+    .opinion-items { flex-direction: column; gap: 14px; }
+    .opinion-strip { flex-direction: column; align-items: flex-start; }
+    .opinion-strip .label { writing-mode: horizontal-tb; transform: none; border-right: none; border-bottom: 2px solid var(--red); padding: 0 0 8px; margin: 0 0 4px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <span>dailymail.co.uk</span>
+  <span>Wednesday, 26 February 2026</span>
+  <span>No. 40,512 · Established 1896</span>
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="edition-info">
+    <span>Late City Edition</span>
+    <span>Weather: London 8°C, Cloudy</span>
+  </div>
+  <div class="masthead">Daily <span>Mail</span></div>
+  <div class="tagline">Britain's Best-Selling Daily Newspaper</div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="active">News</a>
+  <a href="#">Politics</a>
+  <a href="#">Sport</a>
+  <a href="#">Money</a>
+  <a href="#">Health</a>
+  <a href="#">Femail</a>
+  <a href="#">Science</a>
+  <a href="#">Travel</a>
+  <a href="#">TV &amp; Showbiz</a>
+  <a href="#">Royals</a>
+</nav>
+
+<!-- DAILY MAIL EXCLUSIVE -->
+<div class="exclusive">
+  <span class="breaking-label">exclusive</span>
+  <span><p><a href="https://danielpjohns.github.io/dailymail1/"> Is romance brewing? See who was spotted at Little Mix star's solo Chicago show!</a></p></span>
+</div>
+
+<!-- MAIN GRID -->
+<div class="main-grid">
+
+  <!-- HERO STORY -->
+  <div class="hero">
+    <div class="hero-img-placeholder">[ Main Photo ]</div>
+    <div class="photo-caption-bar">Prime Minister addresses the Commons · PA Images</div>
+    <div class="hero-kicker">Exclusive · Cost of Living Crisis</div>
+    <h1>PM Tells Nation to 'Brace for Sacrifice' as Energy Bills Set to Double This Spring</h1>
+    <p class="standfirst">In a stark address to Parliament yesterday, the Prime Minister warned households across Britain that average energy bills could reach £4,200 a year from April — the highest level since records began. Critics call it 'a catastrophic failure of government planning.'</p>
+    <p class="byline">By <strong>James Hartley</strong>, Political Editor · and <strong>Sarah Pembridge</strong>, Economics Correspondent</p>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-story">
+      <div class="sidebar-img-placeholder img1">[ Photo ]</div>
+      <div class="kicker">Royal Family</div>
+      <h3>'She Was Radiant': King Leads Nation in Tribute to Late Queen's Memory on Anniversary</h3>
+      <p>A private ceremony at Windsor brought together senior royals in a poignant gathering, sources close to the Palace confirmed.</p>
+    </div>
+    <div class="sidebar-story">
+      <div class="sidebar-img-placeholder img2">[ Photo ]</div>
+      <div class="kicker">Immigration</div>
+      <h3>Leaked Report Reveals Record 870,000 Migrants Entered UK Last Year</h3>
+      <p>Government officials face mounting pressure after internal Home Office documents showed net migration far exceeding published forecasts.</p>
+    </div>
+    <div class="sidebar-story">
+      <div class="sidebar-img-placeholder img3">[ Photo ]</div>
+      <div class="kicker">Courts</div>
+      <h3>Millionaire Property Developer Jailed for 14 Years After Audacious £90m Fraud</h3>
+      <p>The Old Bailey heard how the defendant had maintained an extravagant lifestyle while investors lost their life savings.</p>
+    </div>
+  </div>
+
+</div>
+
+<hr class="rule thick">
+
+<!-- LOWER GRID -->
+<div class="lower-grid">
+
+  <div class="story-card">
+    <div class="thumb t1">[ Photo ]</div>
+    <div class="kicker">NHS Crisis</div>
+    <h2>Cancer Patients Waiting 18 Months for Treatment as NHS Backlog Hits New Record</h2>
+    <p>The latest NHS England figures show more than 7.8 million patients on waiting lists, with cancer referrals most severely affected. Consultants warn the system has passed a 'breaking point.'</p>
+  </div>
+
+  <div class="story-card">
+    <div class="thumb t2">[ Photo ]</div>
+    <div class="kicker">Education</div>
+    <h2>Ofsted: Half of Secondary Schools Now 'Failing' to Teach Proper Reading Skills</h2>
+    <p>A damning national review by education inspectors found children as old as 14 unable to read proficiently, prompting calls for mandatory phonics testing at secondary level.</p>
+  </div>
+
+  <div class="story-card">
+    <div class="thumb t3">[ Photo ]</div>
+    <div class="kicker">Crime</div>
+    <h2>Knife Crime Hits Shocking 30-Year High as Metropolitan Police Chief Faces Inquiry</h2>
+    <p>New statistics published by the Office for National Statistics show violent crime involving bladed weapons rose 22% in a single year, the sharpest annual increase on record.</p>
+  </div>
+
+</div>
+
+<!-- OPINION STRIP -->
+<div class="opinion-strip">
+  <div class="label">Opinion</div>
+  <div class="opinion-items">
+    <div class="opinion-item">
+      <div class="columnist">Peter Hitchens</div>
+      <h4>'Britain is sleepwalking towards a managed decline the establishment refuses to name'</h4>
+    </div>
+    <div class="opinion-item">
+      <div class="columnist">Sarah Vine</div>
+      <h4>'Why do we keep apologising for standards? Aspiration is not the enemy'</h4>
+    </div>
+    <div class="opinion-item">
+      <div class="columnist">Richard Littlejohn</div>
+      <h4>'You couldn't make it up: the Government's energy plan was written on the back of a napkin'</h4>
+    </div>
+  </div>
+</div>
+
+<!-- MOST READ -->
+<div class="most-read">
+  <div class="most-read-header">Most Read</div>
+  <div class="most-read-list">
+    <div class="most-read-item">
+      <span class="rank">1</span>
+      <p>Energy bills to double in April — what YOU can do now</p>
+    </div>
+    <div class="most-read-item">
+      <span class="rank">2</span>
+      <p>Inside the luxury prison suite where fraudster lived like a king</p>
+    </div>
+    <div class="most-read-item">
+      <span class="rank">3</span>
+      <p>The 12 towns where house prices have FALLEN this year</p>
+    </div>
+    <div class="most-read-item">
+      <span class="rank">4</span>
+      <p>Doctor reveals why you should NEVER take ibuprofen before midday</p>
+    </div>
+    <div class="most-read-item">
+      <span class="rank">5</span>
+      <p>EXCLUSIVE: Palace staff 'in tears' after senior royal's private outburst</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2026 Associated Newspapers Ltd · All Rights Reserved</span>
+  <span>Registered in England No. 84121 · Northcliffe House, London W8 5TT</span>
+  <span class="price-box">£1.40</span>
+</footer>
+
+</body>
+</html>
